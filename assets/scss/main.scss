@@ -1,0 +1,717 @@
+// ─── VARIABLES ───────────────────────────────────────────────
+$vue-green: #42b883;
+$vue-green-dim: #2d8a63;
+$bg-dark: #0a0a0a;
+$bg-panel: #111111;
+$bg-code: #1a1a1a;
+$border-color: #1a1a1a;
+$border-light: #252525;
+$text-main: #f1f1f1;
+$text-dim: #6b7280;
+$text-muted: #4b5563;
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+$font-sans: 'Inter', -apple-system, sans-serif;
+
+// ─── RESET & BASE ────────────────────────────────────────────
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: $bg-dark;
+    color: $text-main;
+    font-family: $font-sans;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+// ─── LAYOUT ──────────────────────────────────────────────────
+.docs-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+}
+
+// ─── SIDEBAR ─────────────────────────────────────────────────
+.sidebar {
+    background: $bg-panel;
+    border-right: 1px solid $border-color;
+    padding: 2.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    scrollbar-width: thin;
+    scrollbar-color: $border-light transparent;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $border-light;
+        border-radius: 2px;
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: $vue-green;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: $font-sans;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $text-main;
+            line-height: 1.3;
+        }
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        li a {
+            display: block;
+            padding: 7px 12px;
+            color: $text-dim;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+            font-weight: 450;
+
+            &:hover {
+                color: $text-main;
+                background: $border-light;
+            }
+
+            &.active,
+            &:focus-visible {
+                color: $vue-green;
+                background: rgba($vue-green, 0.08);
+            }
+        }
+    }
+
+    .sidebar-footer {
+        margin-top: auto;
+
+        .npm-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: $bg-code;
+            border: 1px solid $border-light;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: border-color 0.15s;
+
+            &:hover {
+                border-color: $vue-green;
+            }
+
+            .badge-label {
+                background: #cc3534;
+                color: #fff;
+                font-size: 0.65rem;
+                font-weight: 700;
+                padding: 1px 5px;
+                border-radius: 3px;
+                font-family: $font-mono;
+                letter-spacing: 0.5px;
+            }
+
+            .badge-version {
+                font-size: 0.75rem;
+                color: $text-dim;
+                font-family: $font-mono;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+// ─── MOBILE TOGGLE ───────────────────────────────────────────
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 200;
+    width: 38px;
+    height: 38px;
+    background: $bg-panel;
+    border: 1px solid $border-light;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px;
+    transition: border-color 0.2s;
+
+    &:hover {
+        border-color: $vue-green;
+    }
+
+    span {
+        display: block;
+        width: 18px;
+        height: 1.5px;
+        background: $text-main;
+        border-radius: 1px;
+        transition: transform 0.2s, opacity 0.2s;
+        transform-origin: center;
+    }
+
+    &.open {
+        span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg);
+        }
+
+        span:nth-child(2) {
+            opacity: 0;
+        }
+
+        span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg);
+        }
+    }
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+    backdrop-filter: blur(2px);
+}
+
+// ─── CONTENT AREA ────────────────────────────────────────────
+.content {
+    min-width: 0;
+    padding: 4rem 3rem;
+
+    .content-wrapper {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+}
+
+// ─── MARKDOWN / CONTENT RENDERER ─────────────────────────────
+.content-wrapper {
+
+    // Title
+    h1 {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: $text-main;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+    }
+
+    // Blockquote used as subtitle/lead
+    blockquote {
+        border: none;
+        padding: 0;
+        margin: 0 0 2rem;
+        color: $text-dim;
+        font-size: 1.05rem;
+        font-weight: 400;
+
+        p {
+            margin: 0;
+        }
+
+        // Blockquote inside sections (note style)
+        &:not(:first-of-type) {
+            background: rgba($vue-green, 0.06);
+            border-left: 3px solid $vue-green;
+            padding: 0.75rem 1rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.5rem 0;
+            color: $text-dim;
+            font-size: 0.875rem;
+        }
+    }
+
+    // Badge images (shields.io)
+    p:has(img) {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    img {
+        display: inline-block;
+    }
+
+    // Section dividers
+    hr {
+        border: none;
+        border-top: 1px solid $border-color;
+        margin: 2.5rem 0;
+    }
+
+    // Headings
+    h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: $text-main;
+        margin: 3rem 0 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid $border-color;
+        letter-spacing: -0.02em;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $text-dim;
+        margin: 2rem 0 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.75rem;
+    }
+
+    // Paragraphs
+    p {
+        color: $text-dim;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+
+    // Lists
+    ul,
+    ol {
+        padding-left: 1.25rem;
+        margin-bottom: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        li {
+            color: $text-dim;
+            font-size: 0.925rem;
+
+            strong {
+                color: $text-main;
+                font-weight: 600;
+            }
+
+            code {
+                font-family: $font-mono;
+                font-size: 0.82rem;
+                background: $bg-code;
+                border: 1px solid $border-light;
+                padding: 1px 5px;
+                border-radius: 4px;
+                color: $vue-green;
+            }
+        }
+    }
+
+    // Inline code
+    :not(pre)>code {
+        font-family: $font-mono;
+        font-size: 0.82rem;
+        background: $bg-code;
+        border: 1px solid $border-light;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: $vue-green;
+    }
+
+    // Code blocks
+    pre {
+        background: $bg-code !important;
+        border: 1px solid $border-light;
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
+        overflow-x: auto;
+        margin: 1rem 0 1.5rem;
+        position: relative;
+
+        scrollbar-width: thin;
+        scrollbar-color: $border-light transparent;
+
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $border-light;
+            border-radius: 2px;
+        }
+
+        code {
+            font-family: $font-mono;
+            font-size: 0.83rem;
+            line-height: 1.7;
+            color: #6b7280;
+            background: none !important;
+            border: none;
+            padding: 0;
+        }
+
+        &[class*="language-"]::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 0.65rem;
+            color: $text-muted;
+            font-family: $font-mono;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    }
+
+    // ── Shiki: reset background ──────────────────────────────────
+    .shiki,
+    .shiki code {
+        background: $bg-code !important;
+    }
+
+    // ── Shiki inline-style token overrides ───────────────────────
+    // Görseldeki renk şeması:
+    // keywords (import, from, const, export, type) → vue green
+    // strings / module paths → dim muted green
+    // function names, identifiers → vue green
+    // comments → very dark muted
+    // operators/punctuation → #6b7280
+
+    // vitesse-dark / one-dark-pro / github-dark token colors:
+    pre code {
+
+        // Keywords
+        span[style*="color:#CB7676"],
+        span[style*="color:#cb7676"],
+        span[style*="color:#C792EA"],
+        span[style*="color:#c792ea"],
+        span[style*="color:#F97583"],
+        span[style*="color:#f97583"],
+        span[style*="color:#569CD6"],
+        span[style*="color:#569cd6"],
+        span[style*="color:#4FC1FF"],
+        span[style*="color:#4fc1ff"] {
+            color: $vue-green !important;
+            font-style: normal !important;
+        }
+
+        // Strings & import paths (quoted)
+        span[style*="color:#C3E88D"],
+        span[style*="color:#c3e88d"],
+        span[style*="color:#98C379"],
+        span[style*="color:#98c379"],
+        span[style*="color:#CE9178"],
+        span[style*="color:#ce9178"],
+        span[style*="color:#A8FF60"],
+        span[style*="color:#a8ff60"],
+        span[style*="color:#B5CEA8"],
+        span[style*="color:#b5cea8"] {
+            color: #4b6a55 !important;
+        }
+
+        // Cyan/teal — operators, destructuring, arrows
+        span[style*="color:#89DDFF"],
+        span[style*="color:#89ddff"] {
+            color: #6b7280 !important;
+        }
+
+        // Function / method names
+        span[style*="color:#82AAFF"],
+        span[style*="color:#82aaff"],
+        span[style*="color:#61AFEF"],
+        span[style*="color:#61afef"],
+        span[style*="color:#DCDCAA"],
+        span[style*="color:#dcdcaa"] {
+            color: $vue-green !important;
+        }
+
+        // Comments
+        span[style*="color:#546E7A"],
+        span[style*="color:#546e7a"],
+        span[style*="color:#5C6370"],
+        span[style*="color:#5c6370"],
+        span[style*="color:#676E95"],
+        span[style*="color:#676e95"],
+        span[style*="color:#6A9955"],
+        span[style*="color:#6a9955"] {
+            color: #374151 !important;
+            font-style: italic !important;
+        }
+
+        // Numbers
+        span[style*="color:#F78C6C"],
+        span[style*="color:#f78c6c"],
+        span[style*="color:#D19A66"],
+        span[style*="color:#d19a66"] {
+            color: #b45309 !important;
+        }
+
+        // Plain text, identifiers
+        span[style*="color:#ABB2BF"],
+        span[style*="color:#abb2bf"],
+        span[style*="color:#D4D4D4"],
+        span[style*="color:#d4d4d4"] {
+            color: #6b7280 !important;
+        }
+    }
+
+    // ── Prism / highlight.js class-based fallback ────────────────
+    .token.keyword,
+    .token.builtin {
+        color: $vue-green !important;
+        font-style: normal !important;
+    }
+
+    .token.function {
+        color: $vue-green !important;
+    }
+
+    .token.string,
+    .token.template-string {
+        color: #4b6a55 !important;
+    }
+
+    .token.comment {
+        color: #374151 !important;
+        font-style: italic !important;
+    }
+
+    .token.punctuation {
+        color: #6b7280 !important;
+    }
+
+    .token.operator {
+        color: #6b7280 !important;
+    }
+
+    .token.number {
+        color: #b45309 !important;
+    }
+
+    .token.boolean {
+        color: $vue-green !important;
+    }
+
+    .token.class-name {
+        color: #a78bfa !important;
+    }
+
+    .token.tag {
+        color: $vue-green !important;
+    }
+
+    .token.attr-name {
+        color: #6b7280 !important;
+    }
+
+    .token.attr-value {
+        color: #4b6a55 !important;
+    }
+
+    .token.property {
+        color: $text-dim !important;
+    }
+
+    // Links
+    a {
+        color: $vue-green;
+        text-decoration: none;
+        border-bottom: 1px solid rgba($vue-green, 0.3);
+        transition: border-color 0.15s;
+
+        &:hover {
+            border-color: $vue-green;
+        }
+    }
+
+    // Tables (API section)
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0 2rem;
+        font-size: 0.875rem;
+
+        thead tr {
+            border-bottom: 2px solid $border-light;
+
+            th {
+                text-align: left;
+                padding: 8px 12px;
+                color: $text-dim;
+                font-weight: 600;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+        }
+
+        tbody tr {
+            border-bottom: 1px solid $border-color;
+            transition: background 0.1s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.02);
+            }
+
+            td {
+                padding: 10px 12px;
+                color: $text-dim;
+                vertical-align: top;
+
+                &:first-child {
+                    code {
+                        color: $vue-green;
+                        font-family: $font-mono;
+                        font-size: 0.82rem;
+                        background: rgba($vue-green, 0.08);
+                        border: 1px solid rgba($vue-green, 0.2);
+                        padding: 1px 6px;
+                        border-radius: 4px;
+                    }
+                }
+
+                &:nth-child(2) code {
+                    font-family: $font-mono;
+                    font-size: 0.78rem;
+                    color: #a78bfa;
+                    background: rgba(167, 139, 250, 0.08);
+                    border: 1px solid rgba(167, 139, 250, 0.2);
+                    padding: 1px 5px;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+
+    // Strong
+    strong {
+        color: $text-main;
+        font-weight: 600;
+    }
+}
+
+// ─── RESPONSIVE ──────────────────────────────────────────────
+@media (max-width: 768px) {
+    .docs-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid $border-light;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+
+        &.open {
+            transform: translateX(0);
+        }
+    }
+
+    .content {
+        padding: 4.5rem 1.25rem 2.5rem;
+
+        .content-wrapper {
+            max-width: 100%;
+        }
+    }
+
+    .content-wrapper {
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+        }
+
+        pre {
+            padding: 1rem;
+            font-size: 0.78rem;
+            border-radius: 6px;
+        }
+
+        table {
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .docs-layout {
+        grid-template-columns: 240px 1fr;
+    }
+
+    .content {
+        padding: 3rem 2rem;
+    }
+}
