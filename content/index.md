@@ -6,6 +6,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/vue-shortcut-manager?color=42b883)](https://www.npmjs.com/package/vue-shortcut-manager)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![vue](https://img.shields.io/badge/vue-3.x-42b883.svg)](https://vuejs.org/)
+[![github](https://img.shields.io/badge/github-repo-181717.svg)](https://github.com/orazchollaev/vue-shortcut-manager)
 
 ---
 

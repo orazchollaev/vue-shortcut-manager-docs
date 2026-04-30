@@ -10,7 +10,6 @@
 
     <aside class="sidebar" :class="{ open: sidebarOpen }">
       <div class="sidebar-header">
-        <div class="logo-icon">V</div>
         <h1>Vue Shortcut Manager</h1>
       </div>
       <nav>

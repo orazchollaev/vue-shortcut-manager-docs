@@ -170,6 +170,12 @@ body {
 }
 
 // ─── MOBILE TOGGLE ───────────────────────────────────────────
+@media (max-width: 768px) {
+  .sidebar-header {
+    margin-top: 50px;
+  }
+}
+
 .mobile-menu-toggle {
     display: none;
     position: fixed;
@@ -424,12 +430,7 @@ body {
     }
 
     // ── Shiki inline-style token overrides ───────────────────────
-    // Görseldeki renk şeması:
-    // keywords (import, from, const, export, type) → vue green
-    // strings / module paths → dim muted green
-    // function names, identifiers → vue green
-    // comments → very dark muted
-    // operators/punctuation → #6b7280
+
 
     // vitesse-dark / one-dark-pro / github-dark token colors:
     pre code {
