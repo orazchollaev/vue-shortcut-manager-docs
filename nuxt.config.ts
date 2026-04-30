@@ -1,9 +1,6 @@
 export default defineNuxtConfig({
   modules: ["@nuxt/content"],
   css: ["~/assets/scss/main.scss"],
-  future: {
-    compatibilityVersion: 4,
-  },
   content: {
     build: {
       markdown: {
@@ -14,4 +11,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  vite: {
+    optimizeDeps: {
+      include: ["@nuxtjs/mdc"],
+    },
+  },
+  compatibilityDate: "2026-04-30",
 });
