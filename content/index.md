@@ -135,7 +135,7 @@ Modifier keys: `ctrl`, `shift`, `alt`, `meta`
 
 ---
 
-## Nuxt 3
+## Nuxt 4
 
 ```ts
 // plugins/shortcut-manager.client.ts
