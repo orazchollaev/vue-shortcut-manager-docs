@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
-  modules: ['@nuxt/content'],
-  css: ['../assets/scss/main.scss'],
+  modules: ["@nuxt/content"],
+  css: ["~/assets/scss/main.scss"],
   future: {
     compatibilityVersion: 4,
   },
@@ -8,10 +8,10 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: 'vitesse-dark',
-          langs: ['vue', 'ts', 'bash', 'json'],
+          theme: "vitesse-dark",
+          langs: ["vue", "ts", "bash", "json"],
         },
       },
     },
   },
-})
+});
