@@ -11,17 +11,17 @@
 
 ## Features
 
-- **Zero setup** — just import and use, no `app.use()` needed
-- `useShortcut()` — register a single shortcut
-- `useShortcuts()` — register multiple shortcuts at once
-- `useShortcutScope()` — activate a named scope while component is mounted
-- `useShortcutList()` — reactive list of all shortcuts
-- `<ShortcutCheatsheet />` — built-in modal, open with `shift+?`
-- **Sequence shortcuts** — `g h`, `g i` style combos
+- **`Zero setup`** — just import and use, no `app.use()` needed
+- **`useShortcut()`** — register a single shortcut
+- **`useShortcuts()`** — register multiple shortcuts at once
+- **`useShortcutScope()`** — activate a named scope while component is mounted
+- **`useShortcutList()`** — reactive list of all shortcuts
+- **`<ShortcutCheatsheet />`** — built-in modal, open with `shift+?`
+- **`Sequence shortcuts`** — `g h`, `g i` style combos
 - **`whenFocused`** — only fire when a specific element is focused
-- **Conflict detection** — warns on duplicate key registrations
-- **Auto cleanup** — unregisters on component unmount
-- Full TypeScript support
+- **`Conflict detection`** — warns on duplicate key registrations
+- **`Auto cleanup`** — unregisters on component unmount
+- **`Full TypeScript support`**
 
 ---
 
